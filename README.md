@@ -12,7 +12,7 @@
 
 ### Cloanando o Repositório
 ```sh
-git clone github.com/Luiznunvoa/trabalho-redes
+git clone https://github.com/Luiznunvoa/trabalho-redes
 ```
 ```sh
 cd trabalho-redes
