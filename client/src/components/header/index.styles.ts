@@ -13,6 +13,14 @@ export const StyledHeader = styled.header`
     color: ${(props) => props.theme.colors.main};
   }
 
+  p {
+    font-weight: 600;
+  }
+
+  p:hover {
+    color: ${(props) => props.theme.colors.main};
+  }
+
   a, div {
     display: flex;
     flex-direction: row;

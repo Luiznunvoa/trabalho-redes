@@ -1,29 +1,25 @@
-import { useSession } from "../../hooks/useSession";
+import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { Credentials } from "types/profiles";
+import { useSession } from "../../hooks/useSession";
 
 export function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<{ email: string; password: string }>();
+  const { register, handleSubmit, formState: { errors } } = useForm<Credentials>();
   const { login, loading, error } = useSession();
+  const onSubmit: SubmitHandler<Credentials> = (credentials) => login(credentials)
 
-  const onSubmit: SubmitHandler<{ email: string; password: string }> = (
-    data,
-  ) => {
-    login({ email: data.email, password: data.password });
-  };
+  if (loading) {
+    return <>Loading...</>;
+  }
 
-  if (loading) return <>Loading...</>;
-  if (error)
+  if (error) {
     return (
       <>
         <p>Erro inesperado aconteceu! Verifique suas credenciais!</p>
         <a onClick={() => window.location.href = "/login"}>Voltar</a>
       </>
     );
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,7 +50,7 @@ export function Login() {
       </div>
 
       <button type="submit">Login</button>
-      <NavLink to={"/register"}>Não tem conta??</NavLink>
+      <Link to={"/register"}>Não tem conta??</Link>
     </form>
   );
 }

@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useSessionStore } from "../stores/useSessionStore"; 
 import { SessionService } from "../services/sessionService"; 
 import { httpCLient } from "../adapters/httpClient";
+import { Credentials } from "types/profiles";
 
 const sessionService = new SessionService(httpCLient);
 
@@ -11,7 +12,7 @@ export function useSession() {
   const { setState, reset } = useSessionStore();
 
   const loginMutation = useMutation({
-    mutationFn: async (data: { email: string; password: string }) =>
+    mutationFn: async (data: Credentials) =>
       sessionService.start(data),
     onSuccess: (response) => {
       setState({ accessToken: response.token });

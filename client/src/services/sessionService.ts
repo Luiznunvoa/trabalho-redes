@@ -1,3 +1,4 @@
+import { Credentials } from "types/profiles";
 import { AxiosHttpAdapter } from "../adapters/httpClient";
 
 export class SessionService {
@@ -7,7 +8,7 @@ export class SessionService {
     this.http = httpAdapter;
   }
 
-  async start(data: { email: string, password: string }): Promise<{ token: string }> {
+  async start(data: Credentials): Promise<{ token: string }> {
     return await this.http.requestPrivateBackend({
       method: "post",
       url: "/sessions",
