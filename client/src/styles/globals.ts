@@ -20,12 +20,17 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0; 
   }
 
-  p {
+  p, label, a {
     font-family: "Mulish", sans-serif;
     color: ${(props) => props.theme.colors.foreground};
     font-size: 1.2rem;
     font-weight: 500;
     margin: 0; 
+  }
+
+  span {
+    font-family: "Mulish", sans-serif;
+    font-size: 1.2rem;
   }
 `;
 

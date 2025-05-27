@@ -6,5 +6,7 @@ export const theme = {
     alternate: '#ccacdc',
     darker: '#56819a',
     foreground: '#323d47',
+    alternate_foreground: '#ffffff',
+    alert: '#d84949'
   },
 };
