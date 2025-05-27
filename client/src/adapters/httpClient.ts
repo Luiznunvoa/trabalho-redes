@@ -69,3 +69,5 @@ export class AxiosHttpAdapter {
   }
 }
 
+export const httpCLient = new AxiosHttpAdapter();
+

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserService } from "../services/userService";
-import { AxiosHttpAdapter } from "../adapters/httpClient";
+import { httpCLient } from "../adapters/httpClient";
 import { User } from "../types/profiles";
 
-const userService = new UserService(new AxiosHttpAdapter());
+const userService = new UserService(httpCLient);
 
 // Hook para gerenciar as operações do usuário
 export function useUser() {

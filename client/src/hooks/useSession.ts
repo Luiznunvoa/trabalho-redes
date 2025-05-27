@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useSessionStore } from "../stores/useSessionStore"; 
 import { SessionService } from "../services/sessionService"; 
-import { AxiosHttpAdapter } from "../adapters/httpClient";
+import { httpCLient } from "../adapters/httpClient";
 
-const sessionService = new SessionService(new AxiosHttpAdapter());
+const sessionService = new SessionService(httpCLient);
 
 export function useSession() {
   const navigate = useNavigate();

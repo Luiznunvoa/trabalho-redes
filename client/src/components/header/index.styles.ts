@@ -3,7 +3,23 @@ import styled from "styled-components";
 export const StyledHeader = styled.header`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: 5rem;
-  background-color: grey;
-  padding: 10px;
+  background-color: ${(props) => props.theme.colors.primary};
+  box-shadow: 0px 15px 9px -8px rgba(120,120,120,0.73);
+  padding: 1rem 1rem 1rem 3rem;
+
+  a {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a > img {
+    height: 3rem;
+    width: 3rem;
+  } 
 `;
+
