@@ -7,41 +7,38 @@ import { StyledHeader } from "./index.styles";
 export function Header() {
   const { authenticated } = useSessionStore();
   const [links, setLinks] = useState([
-    {
-      path: "/",
-      label: "What's SuperChat?"
-    },
-    {
-      path: "/",
-      label: "Help"
-    },
-    {
-      path: "/",
-      label: "Blog"
-    },
-    {
-      path: "/",
-      label: "Donate"
-    }
+    { path: "/", label: "What's SuperChat?" },
+    { path: "/", label: "Help" },
+    { path: "/", label: "Blog" },
+    { path: "/", label: "Donate" }
   ]);
 
   useEffect(() => {
     if (!authenticated) {
-      setLinks((prev) => [...prev, { path: "/login", label: "Login!" }]);
+      setLinks((prev) => {
+        const loginExists = prev.some(link => link.path === "/login");
+        if (!loginExists) {
+          return [...prev, { path: "/login", label: "Login!" }];
+        }
+        return prev;
+      });
+    } else {
+      // Remove o campo login se for autenticado
+      setLinks((prev) => prev.filter(link => link.path !== "/login"));
     }
   }, [authenticated]);
 
   return (
     <StyledHeader>
       <div>
-        <Link to={{ pathname: "/", }}>
-          <img src={logo} />
+        <Link to="/">
+          <img src={logo} alt="SuperChat logo" />
           <h1>SuperChat</h1>
         </Link>
       </div>
       <div>
         {links.map((link) => (
-          <Link to={{ pathname: link.path }}>
+          <Link key={link.label} to={link.path}>
             <p>{link.label}</p>
           </Link>
         ))}
@@ -49,3 +46,4 @@ export function Header() {
     </StyledHeader>
   );
 }
+
