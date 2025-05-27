@@ -7,9 +7,13 @@ export const StyledHeader = styled.header`
   height: 5rem;
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 0px 15px 9px -8px rgba(120,120,120,0.73);
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem 3rem 1rem 3rem;
 
-  a {
+  h1 {
+    color: ${(props) => props.theme.colors.main};
+  }
+
+  a, div {
     display: flex;
     flex-direction: row;
     gap: 1rem;
