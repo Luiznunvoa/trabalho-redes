@@ -5,6 +5,7 @@ import { useSession } from "../../hooks/useSession";
 import { StyledContainer, StyledContainerForm, StyledContainerHeader } from "../../styles/container";
 import { StyledButton } from "../../styles/button";
 import { StyledAlert, StyledAlertContaienr } from "../../styles/error_message";
+import { Spinner } from "../../styles/spinner";
 
 export function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm<Credentials>();
@@ -12,7 +13,7 @@ export function Login() {
   const onSubmit: SubmitHandler<Credentials> = (credentials) => login(credentials)
 
   if (loading) {
-    return <>Loading...</>;
+    return <Spinner />;
   }
 
   if (error) {
