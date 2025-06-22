@@ -5,7 +5,7 @@ export class AxiosHttpAdapter {
   private privateBackendInstance: AxiosInstance;
 
   constructor() {
-    const baseURL: string = import.meta.env.VITE_API_BASE_URL;
+    const baseURL: string = "http://localhost:3333";
 
     this.privateBackendInstance = axios.create({
       baseURL,
