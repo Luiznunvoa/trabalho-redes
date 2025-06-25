@@ -8,9 +8,7 @@
     "start:dev": "tsx watch src/server.ts",
     "start:prod": "node build/server.js",
     "build": "tsup src --out-dir build",
-    "husky:prepare": "husky install",
-    "lint": "prettier ./src/ --write && eslint \"**/*.{ts,tsx}\" --fix",
-    "prepare": "husky"
+    "lint": "prettier ./src/ --write && eslint \"**/*.{ts,tsx}\" --fix"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +38,6 @@
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-promise": "6.6.0",
-    "husky": "9.1.7",
     "lint-staged": "15.5.0",
     "prettier": "3.5.3",
     "prisma": "6.5.0",
