@@ -3,12 +3,11 @@ import { type Prisma } from '@prisma/client'
 import { type MessagesRepository } from '../messages-repository'
 
 export class PrismaMessagesRepository implements MessagesRepository {
-
   async create(data: Prisma.MessageCreateInput) {
     const message = await prisma.message.create({
       data,
     })
-    return message; 
+    return message
   }
 
   async findById(id: string) {
@@ -18,7 +17,7 @@ export class PrismaMessagesRepository implements MessagesRepository {
       },
     })
 
-    return message; 
+    return message
   }
 
   async delete(id: string) {
@@ -28,6 +27,6 @@ export class PrismaMessagesRepository implements MessagesRepository {
       },
     })
 
-    return message;
+    return message
   }
 }

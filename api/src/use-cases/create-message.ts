@@ -1,15 +1,31 @@
-import { MessagesRepository } from '@/repositories/messages-repository'
+import { type MessagesRepository } from '@/repositories/messages-repository'
 
 interface CreateMessageUseCaseRequest {
-  userId: string,
-  conversationId: string,
-  // TODO: Outros dados da mensagem
+  content: string
+  senderId: string
+  conversationId: string
 }
 
 export class CreateMessageUseCase {
   constructor(private readonly messageRepository: MessagesRepository) {}
 
-  async execute({ userId, conversationId, }: CreateMessageUseCaseRequest): Promise<void> {
-    // TODO: Lógica de criação da mensagem
+  async execute({
+    content,
+    senderId,
+    conversationId,
+  }: CreateMessageUseCaseRequest) {
+    await this.messageRepository.create({
+      content,
+      sender: {
+        connect: {
+          id: senderId,
+        },
+      },
+      conversation: {
+        connect: {
+          id: conversationId,
+        },
+      },
+    })
   }
 }
