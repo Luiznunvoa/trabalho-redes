@@ -4,4 +4,8 @@ export interface MessagesRepository {
   create: (data: Prisma.MessageCreateInput) => Promise<Message>
   findById: (id: string) => Promise<Message | null>
   delete: (id: string) => Promise<Message>
+  findManyByConversationId: (
+    conversationId: string,
+    page: number,
+  ) => Promise<Message[]>
 }

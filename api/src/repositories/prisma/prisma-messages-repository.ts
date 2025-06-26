@@ -20,6 +20,21 @@ export class PrismaMessagesRepository implements MessagesRepository {
     return message
   }
 
+  async findManyByConversationId(conversationId: string, page: number) {
+    const messages = await prisma.message.findMany({
+      where: {
+        conversationId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return messages
+  }
+
   async delete(id: string) {
     const message = await prisma.message.delete({
       where: {
