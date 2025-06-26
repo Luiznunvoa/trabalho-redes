@@ -12,6 +12,5 @@ export async function routes(app: FastifyInstance) {
 
   app.get('/profile', { preHandler: [authentication] }, profile)
 
-  app.post( '/conversations/messages/:conversationId', { preHandler: [authentication] }, createMessage,
-  )
+  app.post('/conversations/messages/:conversationId', { preHandler: [authentication] }, createMessage)
 }
