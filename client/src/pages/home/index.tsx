@@ -3,13 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/useUsers";
 import { useSessionStore } from "../../stores/useSessionStore";
 import { useSession } from "../../hooks/useSession";
-
-interface Message {
-  id: number;
-  sender: string;
-  content: string;
-  timestamp: string;
-}
+import { ConversationService } from "../../services/conversationService";
+import { httpCLient } from "../../adapters/httpClient";
+import { Message } from "../../types/conversation";
 
 export function Home() {
   const navigate = useNavigate();
@@ -23,6 +19,21 @@ export function Home() {
     getProfile();
   }, [getProfile]);
 
+  const getNewMessages = async (conversationId: string) => {
+    const conversationService = new ConversationService(httpCLient);
+    try {
+      const response = await conversationService.getMessages({conversationId});
+      setMessages(response.messages);
+    } catch (error) {
+      alert("Erro ao buscar as mensagens novas!");
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getNewMessages("global_chat_id");
+  }, [])
+  
   if (loading || !user) {
     return <>loading...</>;
   }
@@ -40,16 +51,11 @@ export function Home() {
       <div>
         <h2>Chat</h2>
         <div>
-          <p>Mensagens vao aparecer aqui</p>
-        </div>
-
-        <div>
           {/* Lista de mensagens */}
           {messages.map((message) => (
             <div key={message.id}>
               <p>
-                <b>{message.sender}</b>: {message.content}{" "}
-                <small>{message.timestamp}</small>
+                <b>{message.senderId}</b>: {message.content}{" "}
               </p>
             </div>
           ))}
@@ -67,7 +73,7 @@ export function Home() {
             onClick={() => {
               // Função de envio futura
               // Ex: sendMessage(newMessage);
-              setNewMessage("");
+              setNewMessage(newMessage);
             }}
           >
             Enviar

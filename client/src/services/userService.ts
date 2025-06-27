@@ -1,4 +1,4 @@
-import { User } from "types/profiles";
+import { User } from "../types/profiles";
 import { AxiosHttpAdapter } from "../adapters/httpClient";
 
 export class UserService {

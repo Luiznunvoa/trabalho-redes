@@ -1,4 +1,4 @@
-import { Credentials } from "types/profiles";
+import { Credentials } from "../types/profiles";
 import { AxiosHttpAdapter } from "../adapters/httpClient";
 
 export class SessionService {
