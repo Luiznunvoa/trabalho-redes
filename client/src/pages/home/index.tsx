@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useSession } from "../../hooks/useSession";
 import { useConversation } from "../../hooks/useConversation";
 
 export function Home() {
   const { logout } = useSession();
-  const { messages, error, isLoading } = useConversation("global_chat_id");
+  const { messages, error, isLoading, sendMessage } = useConversation("global_chat_id");
   const [newMessage, setNewMessage] = useState("");
 
   if (error) {
     return <>{error.message}</>
   }
+
+  const handleSendMessage = (event: FormEvent<HTMLFormElement>) => { 
+    event.preventDefault(); // Previne o recarregamento da página
+
+    if (newMessage.trim()) {
+      sendMessage({ content: newMessage, conversationId: "global_chat_id" });
+      setNewMessage("");
+    }
+  };
 
   return (
     <>
@@ -23,26 +32,22 @@ export function Home() {
                 <b>{message.senderId}</b>: {message.content}{" "}
               </p>
             </div>
-          ))}
+          )).reverse()}
         </div>
 
-        <div>
-          {/* Input de nova mensagem */}
+        <form onSubmit={handleSendMessage}>
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Digite sua mensagem..."
           />
-          <button
-            onClick={() => {setNewMessage(newMessage)}}
-          >
+          <button type="submit">
             Enviar
           </button>
-        </div>
+        </form>
       </div>
       <a onClick={() => logout()}>Sair</a>
     </>
   );
 }
-

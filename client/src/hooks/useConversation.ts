@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ConversationService } from "../services/conversationService";
 import { httpCLient } from "../adapters/httpClient";
 
@@ -15,7 +15,22 @@ const getNewMessages = async (conversationId: string) => {
   }
 };
 
+const createMessage = async (data: {
+  content: string;
+  conversationId: string;
+}) => {
+  const conversationService = new ConversationService(httpCLient);
+  try {
+    await conversationService.createMessage(data);
+  } catch (error) {
+    console.error("Error creating message:", error);
+    throw error;
+  }
+};
+
 export function useConversation(conversationId: string) {
+  const queryClient = useQueryClient();
+
   const {
     data: messages,
     error,
@@ -27,5 +42,12 @@ export function useConversation(conversationId: string) {
     enabled: !!conversationId,
   });
 
-  return { messages, error, isLoading };
+  const { mutate: sendMessage } = useMutation({
+    mutationFn: createMessage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["messages", conversationId] });
+    },
+  });
+
+  return { messages, error, isLoading, sendMessage };
 }
