@@ -17,14 +17,10 @@ export class ConversationService {
   }
 
   async getMessages(data: { conversationId: string }): Promise<{ messages: Message[]}> {
-    const response = await this.http.requestPrivateBackend({
+   return await this.http.requestPrivateBackend({
       method: "get",
       url: `/conversations/messages/${data.conversationId}`,
       withCredentials: true
     });
-    
-    console.log(response);
-
-    return response;
   }
 }

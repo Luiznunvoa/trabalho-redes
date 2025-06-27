@@ -5,14 +5,13 @@ import { useSessionStore } from "../../stores/useSessionStore";
 import { useSession } from "../../hooks/useSession";
 import { ConversationService } from "../../services/conversationService";
 import { httpCLient } from "../../adapters/httpClient";
-import { Message } from "../../types/conversation";
+import { useQuery } from "@tanstack/react-query";
 
 export function Home() {
   const navigate = useNavigate();
   const { user, loading, error, getProfile } = useUser();
   const { logout } = useSession();
 
-  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
@@ -22,18 +21,22 @@ export function Home() {
   const getNewMessages = async (conversationId: string) => {
     const conversationService = new ConversationService(httpCLient);
     try {
-      const response = await conversationService.getMessages({conversationId});
-      setMessages(response.messages);
+      const response = await conversationService.getMessages({
+        conversationId,
+      });
+      return response.messages;
     } catch (error) {
       alert("Erro ao buscar as mensagens novas!");
       console.error(error);
     }
-  }
+  };
 
-  useEffect(() => {
-    getNewMessages("global_chat_id");
-  }, [])
-  
+  const { data: messages } = useQuery({
+    queryKey: ["messages"],
+    queryFn: () => getNewMessages("global_chat_id"),
+    refetchInterval: 5000,
+  });
+
   if (loading || !user) {
     return <>loading...</>;
   }
@@ -52,7 +55,7 @@ export function Home() {
         <h2>Chat</h2>
         <div>
           {/* Lista de mensagens */}
-          {messages.map((message) => (
+          {messages?.map((message) => (
             <div key={message.id}>
               <p>
                 <b>{message.senderId}</b>: {message.content}{" "}
