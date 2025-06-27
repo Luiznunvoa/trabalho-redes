@@ -1,53 +1,12 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "../../hooks/useUsers";
-import { useSessionStore } from "../../stores/useSessionStore";
+import { useState } from "react";
 import { useSession } from "../../hooks/useSession";
-import { ConversationService } from "../../services/conversationService";
-import { httpCLient } from "../../adapters/httpClient";
-import { useQuery } from "@tanstack/react-query";
+import { useConversation } from "../../hooks/useConversation";
 
 export function Home() {
-  const navigate = useNavigate();
-  const { user, loading, error, getProfile } = useUser();
   const { logout } = useSession();
-
+  const { messages } = useConversation("global_chat_id");
   const [newMessage, setNewMessage] = useState("");
-
-  useEffect(() => {
-    getProfile();
-  }, [getProfile]);
-
-  const getNewMessages = async (conversationId: string) => {
-    const conversationService = new ConversationService(httpCLient);
-    try {
-      const response = await conversationService.getMessages({
-        conversationId,
-      });
-      return response.messages;
-    } catch (error) {
-      alert("Erro ao buscar as mensagens novas!");
-      console.error(error);
-    }
-  };
-
-  const { data: messages } = useQuery({
-    queryKey: ["messages"],
-    queryFn: () => getNewMessages("global_chat_id"),
-    refetchInterval: 5000,
-  });
-
-  if (loading || !user) {
-    return <>loading...</>;
-  }
-
-  if (error) {
-    alert("erro inesperado");
-    useSessionStore.getState().reset();
-    navigate("/login");
-    return null;
-  }
-
+ 
   return (
     <>
       {/* Estrutura do Chat */}
@@ -73,11 +32,7 @@ export function Home() {
             placeholder="Digite sua mensagem..."
           />
           <button
-            onClick={() => {
-              // Função de envio futura
-              // Ex: sendMessage(newMessage);
-              setNewMessage(newMessage);
-            }}
+            onClick={() => {setNewMessage(newMessage)}}
           >
             Enviar
           </button>

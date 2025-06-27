@@ -17,7 +17,7 @@ export class ConversationService {
   }
 
   async getMessages(data: { conversationId: string }): Promise<{ messages: Message[]}> {
-   return await this.http.requestPrivateBackend({
+    return await this.http.requestPrivateBackend({
       method: "get",
       url: `/conversations/messages/${data.conversationId}`,
       withCredentials: true

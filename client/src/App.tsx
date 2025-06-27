@@ -8,11 +8,11 @@ export const queryClient = new QueryClient();
 
 export function App() {
   return (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
         <BrowserRouter />
         <GlobalStyle />
-    </ThemeProvider>
-  </QueryClientProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
