@@ -4,17 +4,20 @@ import { useConversation } from "../../hooks/useConversation";
 
 export function Home() {
   const { logout } = useSession();
-  const { messages } = useConversation("global_chat_id");
+  const { messages, error, isLoading } = useConversation("global_chat_id");
   const [newMessage, setNewMessage] = useState("");
- 
+
+  if (error) {
+    return <>{error.message}</>
+  }
+
   return (
     <>
       {/* Estrutura do Chat */}
       <div>
         <h2>Chat</h2>
         <div>
-          {/* Lista de mensagens */}
-          {messages?.map((message) => (
+          {isLoading ? <>LOADING</> : messages?.map((message) => (
             <div key={message.id}>
               <p>
                 <b>{message.senderId}</b>: {message.content}{" "}
