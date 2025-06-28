@@ -1,3 +1,4 @@
+import { FormEvent, useState } from "react";
 import { useConversations } from "../../hooks/useConversations";
 
 type ChatSelectorProps = {
@@ -11,7 +12,16 @@ export function ChatSelector({
   setConversationId,
   selectedConversation,
 }: ChatSelectorProps) {
-  const { conversations, error, isLoading, enterConversation } = useConversations(allConversations);
+  const { conversations, error, isLoading, enterConversation, createConversation } = useConversations(allConversations);
+  const [conversationName, setConversationName] = useState<string>();
+
+  const handleCreateConversation = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Previne o recarregamento da página
+
+    if (conversationName) {
+      createConversation(conversationName);
+    }
+  }
 
   return (
     <div style={{ width: "250px", borderRight: "1px solid #ccc", overflowY: "auto" }}>
@@ -42,7 +52,20 @@ export function ChatSelector({
           ) : null;
         })}
       </ul>
+      <br/>
+      <h3>Crie uma nova conversa</h3>
+      <form onSubmit={handleCreateConversation}>
+        <input
+          type="text"
+          value={conversationName}
+          onChange={(e) => setConversationName(e.target.value)}
+          placeholder="De um nome..."
+        />
+        <button type="submit">
+          criar
+        </button>
+      </form>
+
     </div>
   );
 }
-

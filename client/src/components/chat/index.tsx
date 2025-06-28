@@ -34,6 +34,7 @@ return (
         </div>
 
         <form onSubmit={handleSendMessage}>
+
           <input
             type="text"
             value={newMessage}
