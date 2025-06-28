@@ -6,4 +6,5 @@ export interface UsersRepository {
   findById: (id: string) => Promise<User | null>
   delete: (id: string) => Promise<User>
   patchPassword: (id: string, password: string) => Promise<User>
+  findManyByConversationId: (conversationId: string) => Promise<User[]>
 }

@@ -1,5 +1,5 @@
-import { type ConversationsRepository } from "@/repositories/conversations-repository"
-import { type Conversation } from "@/prisma/generated/client"
+import { type ConversationsRepository } from '@/repositories/conversations-repository'
+import { type Conversation } from '@prisma/client'
 
 interface CreateConversationUseCaseRequest {
   name: string
@@ -11,7 +11,9 @@ interface CreateConversationUseCaseResponse {
 }
 
 export class CreateConversationUseCase {
-  constructor(private conversationsRepository: ConversationsRepository) {}
+  constructor(
+    private readonly conversationsRepository: ConversationsRepository,
+  ) {}
 
   async execute({
     name,

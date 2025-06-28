@@ -53,4 +53,18 @@ export class PrismaUsersRepository implements UsersRepository {
 
     return user
   }
+
+  async findManyByConversationId(conversationId: string) {
+    const users = await prisma.user.findMany({
+      where: {
+        conversations: {
+          some: {
+            id: conversationId,
+          },
+        },
+      },
+    })
+
+    return users
+  }
 }

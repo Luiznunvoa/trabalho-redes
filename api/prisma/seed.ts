@@ -17,10 +17,12 @@ async function main() {
 
   // Corrigido: usar prisma.conversation (minúsculo)
   const globalConversation = await prisma.conversation.upsert({
-    where: { id: 'global_chat_id' },
+    where: { 
+      id: '76178335-291e-4537-9a94-d2f3c746c960',
+      name: 'Conversa Global' 
+    },
     update: {},
     create: {
-      id: 'global_chat_id',
       name: 'Conversa Global'
     }
   })

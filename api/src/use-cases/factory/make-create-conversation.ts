@@ -1,5 +1,5 @@
-import { PrismaConversationsRepository } from "@/repositories/prisma/prisma-conversations-repository"
-import { CreateConversationUseCase } from "../create-conversation"
+import { PrismaConversationsRepository } from '@/repositories/prisma/prisma-conversations-repository'
+import { CreateConversationUseCase } from '../create-conversation'
 
 export function makeCreateConversationUseCase() {
   const conversationsRepository = new PrismaConversationsRepository()

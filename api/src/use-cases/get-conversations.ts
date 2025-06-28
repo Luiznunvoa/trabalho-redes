@@ -19,10 +19,14 @@ export class GetConversationsUseCase {
     let conversations
 
     if (allConversations) {
-      conversations = await this.conversationRepository.findAllConversations(page)
+      conversations =
+        await this.conversationRepository.findAllConversations(page)
     } else {
+      if (userId === undefined || userId === null) {
+        throw new Error('User ID is required for user-specific conversations.')
+      }
       conversations = await this.conversationRepository.getUserConversations(
-        userId as string,
+        userId,
         page,
       )
     }

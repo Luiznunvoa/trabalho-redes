@@ -1,9 +1,11 @@
+import { makeCreateConversationUseCase } from '@/use-cases/factory/make-create-conversation'
+import { type FastifyReply, type FastifyRequest } from 'fastify'
+import { z } from 'zod'
 
-import { makeCreateConversationUseCase } from "@/use-cases/factory/make-create-conversation"
-import { type FastifyReply, type FastifyRequest } from "fastify"
-import { z } from "zod"
-
-export async function createConversation(request: FastifyRequest, reply: FastifyReply) {
+export async function createConversation(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const createConversationBodySchema = z.object({
     name: z.string(),
   })
