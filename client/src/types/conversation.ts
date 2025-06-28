@@ -1,7 +1,8 @@
 export type Conversation = {
   id: string;
   name: string;
-  creatadedAt: Date
+  creatadedAt: Date;  
+  isParticipant ?: boolean;
 }
 
 export type Message = {
@@ -11,4 +12,5 @@ export type Message = {
   creatadedAt: Date;
   read: boolean;
   senderId: string;
+  sender: { name: string }
 }

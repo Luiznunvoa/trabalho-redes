@@ -14,4 +14,5 @@ export interface ConversationsRepository {
     page: number,
   ) => Promise<Conversation[]>
   findAllConversations: (page: number) => Promise<Conversation[]>
+  isUserInConversation: (userId: string, conversationId: string) => Promise<boolean>
 }

@@ -7,7 +7,7 @@ interface GetMessagesUseCaseRequest {
 }
 
 interface GetMessagesUseCaseResponse {
-  messages: Message[]
+  messages: Array<Message & { sender: { name: string } }>
 }
 
 export class GetMessagesUseCase {

@@ -27,7 +27,7 @@ return (
           {isLoading ? <>LOADING</> : messages?.map((message) => (
             <div key={message.id}>
               <p>
-                <b>{message.senderId}</b>: {message.content}{" "}
+                <b>{message.sender.name}</b>: {message.content}{" "}
               </p>
             </div>
           )).reverse()}

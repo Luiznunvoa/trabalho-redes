@@ -7,5 +7,5 @@ export interface MessagesRepository {
   findManyByConversationId: (
     conversationId: string,
     page: number,
-  ) => Promise<Message[]>
+  ) => Promise<Array<Message & { sender: { name: string } }>>
 }

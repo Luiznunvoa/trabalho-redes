@@ -30,6 +30,13 @@ export class PrismaMessagesRepository implements MessagesRepository {
       },
       take: 20,
       skip: (page - 1) * 20,
+      include: {
+        sender: {
+          select: {
+            name: true,
+          },
+        },
+      },
     })
 
     return messages

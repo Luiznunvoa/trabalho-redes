@@ -65,8 +65,31 @@ export class PrismaConversationsRepository implements ConversationsRepository {
     const conversations = await prisma.conversation.findMany({
       take: 20,
       skip: (page - 1) * 20,
+      include: {
+        participants: true,
+      },
     })
 
     return conversations
+  }
+
+  async isUserInConversation(
+    userId: string,
+    conversationId: string,
+  ): Promise<boolean> {
+    const conversation = await prisma.conversation.findUnique({
+      where: {
+        id: conversationId,
+      },
+      include: {
+        participants: {
+          where: {
+            id: userId,
+          },
+        },
+      },
+    })
+
+    return (conversation?.participants.length ?? 0) > 0
   }
 }

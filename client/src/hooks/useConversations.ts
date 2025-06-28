@@ -12,6 +12,7 @@ export function useConversations(allConversations?: boolean) {
     const conversationService = new ConversationService(httpCLient);
     try {
       const response = await conversationService.getConversations({ page, allConversations });
+      console.log(response)
       return response.conversations;
     } catch (error) {
       console.error("Error fetching conversations:", error);

@@ -1,9 +1,14 @@
 import { type ConversationsRepository } from '@/repositories/conversations-repository'
+import { type Conversation } from '@prisma/client'
 
 interface GetConversationsUseCaseRequest {
-  userId?: string
+  userId: string
   page: number
   allConversations?: boolean
+}
+
+interface GetConversationsUseCaseResponse {
+  conversations: Array<Conversation & { isParticipant: boolean }>
 }
 
 export class GetConversationsUseCase {
@@ -15,20 +20,32 @@ export class GetConversationsUseCase {
     userId,
     page,
     allConversations = false,
-  }: GetConversationsUseCaseRequest) {
+  }: GetConversationsUseCaseRequest): Promise<GetConversationsUseCaseResponse> {
     let conversations
 
     if (allConversations) {
-      conversations =
+      const allConvs =
         await this.conversationRepository.findAllConversations(page)
+
+      conversations = await Promise.all(
+        allConvs.map(async (conversation) => {
+          const isParticipant =
+            await this.conversationRepository.isUserInConversation(
+              userId,
+              conversation.id,
+            )
+          return { ...conversation, isParticipant }
+        }),
+      )
     } else {
-      if (userId === undefined || userId === null) {
-        throw new Error('User ID is required for user-specific conversations.')
-      }
       conversations = await this.conversationRepository.getUserConversations(
         userId,
         page,
       )
+      conversations = conversations.map((conversation) => ({
+        ...conversation,
+        isParticipant: true,
+      }))
     }
 
     return { conversations }

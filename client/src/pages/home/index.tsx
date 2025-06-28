@@ -24,6 +24,7 @@ export function Home() {
         <ChatSelector
           allConversations={showAllConversations}
           setConversationId={setConversationId}
+          selectedConversation={conversationId}
         />
 
         <a
