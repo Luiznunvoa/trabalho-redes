@@ -22,6 +22,14 @@ export class ConversationService {
       params
     });
   }
+  
+  async addUser(data: { conversationId: string, userId: string }): Promise<void> {
+    return await this.http.requestPrivateBackend({
+      method: "post",
+      url: `/conversations/add-user/${data.conversationId}`,
+      data: { userId: data.userId}
+    });
+  }
 
   async createMessage(data: { content: string, conversationId: string }): Promise<void> {
     return await this.http.requestPrivateBackend({

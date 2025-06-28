@@ -3,11 +3,10 @@ import { useConversations } from "../../hooks/useConversations";
 type ChatSelectorProps = { 
   allConversations?: boolean, 
   setConversationId: (conversationId: string) => void, 
-  enterConversation: (conversationId: string) => void 
 }
 
-export function ChatSelector({ allConversations = false, setConversationId, enterConversation}: ChatSelectorProps) {
-  const { conversations, error, isLoading } = useConversations(allConversations);
+export function ChatSelector({ allConversations = false, setConversationId }: ChatSelectorProps) {
+  const { conversations, error, isLoading, enterConversation } = useConversations(allConversations);
 
   return (
     <div style={{ width: '250px', borderRight: '1px solid #ccc', overflowY: 'auto' }}>
@@ -33,6 +32,4 @@ export function ChatSelector({ allConversations = false, setConversationId, ente
       </ul>
     </div>
   );
-
-
 }

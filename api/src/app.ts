@@ -8,6 +8,7 @@ import { UserAlreadyExistsError } from './use-cases/errors/user-already-exists-e
 import { InvalidCredentialsError } from './use-cases/errors/invalid-credentials-error'
 import { UnauthorizedError } from './use-cases/errors/unauthorized-error'
 import fastifyCookie from '@fastify/cookie'
+import cors from '@fastify/cors'
 
 export const app = fastify()
 
@@ -16,6 +17,13 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+
+app.register(cors, {
+  origin: env.FRONTEND_URL,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+})
 
 app.register(routes)
 

@@ -14,7 +14,7 @@ export class GetConversationsUseCase {
   async execute({
     userId,
     page,
-    allConversations = true,
+    allConversations = false,
   }: GetConversationsUseCaseRequest) {
     let conversations
 
@@ -31,6 +31,6 @@ export class GetConversationsUseCase {
       )
     }
 
-    return conversations
+    return { conversations }
   }
 }

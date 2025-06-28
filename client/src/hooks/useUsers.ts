@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserService } from "../services/userService";
 import { httpCLient } from "../adapters/httpClient";
 import { User } from "../types/profiles";
+import { useUserStore } from "../stores/useUserStore"; // ajuste o path conforme necessário
 
 const userService = new UserService(httpCLient);
 
@@ -10,15 +11,27 @@ const userService = new UserService(httpCLient);
 export function useUser() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const setUser = useUserStore((state) => state.setUser);
+  const resetUser = useUserStore((state) => state.resetUser);
 
   const { data, error, refetch } = useQuery<User>({
     queryKey: ["userProfile"],
-    queryFn: () => userService.profile(),
+    queryFn: async () => {
+      const user = await userService.profile();
+      setUser({ id: user.id, name: user.name, email: user.email });
+      return user;
+    },
     enabled: false, // a query não é disparada automaticamente
   });
 
   const getProfile = async () => {
-    return await refetch();
+    const result = await refetch();
+    if (result.data) {
+      setUser({ id: result.data.id, name: result.data.name, email: result.data.email });
+    } else {
+      resetUser();
+    }
+    return result;
   };
 
   const createUser = useMutation({

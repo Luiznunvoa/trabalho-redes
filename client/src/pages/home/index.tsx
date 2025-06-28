@@ -24,7 +24,6 @@ export function Home() {
         <ChatSelector
           allConversations={showAllConversations}
           setConversationId={setConversationId}
-          enterConversation={() => {return}} // TODO: Implement logic of joining conversations
         />
 
         <a
