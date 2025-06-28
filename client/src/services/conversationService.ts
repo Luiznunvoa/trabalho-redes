@@ -1,11 +1,26 @@
 import { AxiosHttpAdapter } from "../adapters/httpClient";
-import { Message } from "../types/conversation";
+import { Conversation, Message } from "../types/conversation";
 
 export class ConversationService {
   private http: AxiosHttpAdapter;
 
   constructor(httpAdapter: AxiosHttpAdapter) {
     this.http = httpAdapter;
+  }
+
+  async getConversations(data: { allConversations?: boolean, page: number}): Promise<{ conversations: Conversation[] }> {
+    let params;
+    if (data.allConversations) {
+      params = { page: data.page, allConversations: data.allConversations || false }
+    } else {
+      params = { page: data.page }
+    }
+
+    return await this.http.requestPrivateBackend({
+      method: "get",
+      url: `/conversations`,
+      params
+    });
   }
 
   async createMessage(data: { content: string, conversationId: string }): Promise<void> {
@@ -16,7 +31,7 @@ export class ConversationService {
     });
   }
 
-  async getMessages(data: { conversationId: string }): Promise<{ messages: Message[]}> {
+  async getMessages(data: { conversationId: string }): Promise<{ messages: Message[] }> {
     return await this.http.requestPrivateBackend({
       method: "get",
       url: `/conversations/messages/${data.conversationId}`,

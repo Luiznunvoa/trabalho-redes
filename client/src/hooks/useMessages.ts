@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ConversationService } from "../services/conversationService";
 import { httpCLient } from "../adapters/httpClient";
 
-export function useConversation(conversationId: string) {
+export function useMessages(conversationId: string) {
   const queryClient = useQueryClient();
 
   const getNewMessages = async (conversationId: string) => {

@@ -1,3 +1,9 @@
+export type Conversation = {
+  id: string;
+  name: string;
+  creatadedAt: Date
+}
+
 export type Message = {
   id: string;
   content: string;

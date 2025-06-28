@@ -1,8 +1,8 @@
 import { FormEvent, useState } from "react";
-import { useConversation } from "../../hooks/useConversation";
+import { useMessages } from "../../hooks/useMessages";
 
 export function Chat({ conversationId }: { conversationId: string }) {
-  const { messages, error, isLoading, sendMessage } = useConversation(conversationId);
+  const { messages, error, isLoading, sendMessage } = useMessages(conversationId);
   const [newMessage, setNewMessage] = useState("");
 
   if (error) {
