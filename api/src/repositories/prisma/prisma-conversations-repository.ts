@@ -2,6 +2,21 @@ import { type ConversationsRepository } from '../conversations-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaConversationsRepository implements ConversationsRepository {
+  async create(data: { name: string; userId: string }) {
+    const conversation = await prisma.conversation.create({
+      data: {
+        name: data.name,
+        participants: {
+          connect: {
+            id: data.userId,
+          },
+        },
+      },
+    })
+
+    return conversation
+  }
+
   async findById(id: string) {
     const conversation = await prisma.conversation.findUnique({
       where: {

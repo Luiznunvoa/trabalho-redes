@@ -7,6 +7,7 @@ import { createMessage } from './controllers/send-message'
 import { getMessages } from './controllers/get-messages'
 import { addUserToConversation } from './controllers/add-user-to-conversation'
 import { getConversations } from './controllers/get-conversations'
+import { createConversation } from './controllers/create-conversation'
 
 export async function routes(app: FastifyInstance) {
   app.post('/users', register)
@@ -34,4 +35,10 @@ export async function routes(app: FastifyInstance) {
   )
 
   app.get('/conversations', { preHandler: [authentication] }, getConversations)
+
+  app.post(
+    '/conversations',
+    { preHandler: [authentication] },
+    createConversation,
+  )
 }

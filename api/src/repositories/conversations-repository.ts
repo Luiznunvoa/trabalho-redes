@@ -1,6 +1,12 @@
 import { type Conversation } from '@prisma/client'
 
 export interface ConversationsRepository {
+  create: (
+    data: {
+      name: string
+      userId: string
+    },
+  ) => Promise<Conversation>
   findById: (
     id: string,
   ) => Promise<(Conversation & { participants: any[] }) | null>
