@@ -2,34 +2,31 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ConversationService } from "../services/conversationService";
 import { httpCLient } from "../adapters/httpClient";
 
-const getNewMessages = async (conversationId: string) => {
-  const conversationService = new ConversationService(httpCLient);
-  try {
-    const response = await conversationService.getMessages({
-      conversationId,
-    });
-    return response.messages;
-  } catch (error) {
-    console.error("Error fetching new messages:", error);
-    throw error;
-  }
-};
-
-const createMessage = async (data: {
-  content: string;
-  conversationId: string;
-}) => {
-  const conversationService = new ConversationService(httpCLient);
-  try {
-    await conversationService.createMessage(data);
-  } catch (error) {
-    console.error("Error creating message:", error);
-    throw error;
-  }
-};
-
 export function useConversation(conversationId: string) {
   const queryClient = useQueryClient();
+
+  const getNewMessages = async (conversationId: string) => {
+    const conversationService = new ConversationService(httpCLient);
+    try {
+      const response = await conversationService.getMessages({
+        conversationId,
+      });
+      return response.messages;
+    } catch (error) {
+      console.error("Error fetching new messages:", error);
+      throw error;
+    }
+  };
+
+  const createMessage = async (content: string) => {
+    const conversationService = new ConversationService(httpCLient);
+    try {
+      await conversationService.createMessage({ content, conversationId});
+    } catch (error) {
+      console.error("Error creating message:", error);
+      throw error;
+    }
+  };
 
   const {
     data: messages,
