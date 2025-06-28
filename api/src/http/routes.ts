@@ -5,6 +5,8 @@ import { authentication } from '@/middlewares/authentication'
 import { profile } from './controllers/profile'
 import { createMessage } from './controllers/send-message'
 import { getMessages } from './controllers/get-messages'
+import { addUserToConversation } from './controllers/add-user-to-conversation'
+import { getConversations } from './controllers/get-conversations'
 
 export async function routes(app: FastifyInstance) {
   app.post('/users', register)
@@ -24,4 +26,12 @@ export async function routes(app: FastifyInstance) {
     { preHandler: [authentication] },
     getMessages,
   )
+
+  app.post(
+    '/conversations/add-user/:conversationId',
+    { preHandler: [authentication] },
+    addUserToConversation,
+  )
+
+  app.get('/conversations', { preHandler: [authentication] }, getConversations)
 }

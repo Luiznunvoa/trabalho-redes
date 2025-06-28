@@ -23,7 +23,7 @@ export async function createMessage(
   await createMessageUseCase.execute({
     content,
     conversationId,
-    senderId: request.userId || "error",
+    senderId: request.userId ?? 'error',
   })
 
   return await reply.status(201).send()

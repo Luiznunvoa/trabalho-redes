@@ -40,7 +40,7 @@ export async function authenticate(
       },
     )
 
-    return await reply
+    return reply
       .status(200)
       .setCookie('refreshToken', refreshToken, {
         path: '/',

@@ -21,7 +21,7 @@ async function main() {
     update: {},
     create: {
       id: 'global_chat_id',
-      isGlobal: true,
+      name: 'Conversa Global'
     }
   })
 
