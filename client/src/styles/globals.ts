@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: ${(props) => props.theme.colors.background}; 
   }
 
   a {
@@ -13,15 +14,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-family: "Mulish", sans-serif;
+    font-family: "Bricolage Grotesque", sans-serif;
     color: ${(props) => props.theme.colors.foreground};
     font-weight: 800;
     font-style: italic;
     margin: 0; 
   }
 
-  p, label, a {
-    font-family: "Mulish", sans-serif;
+  p, label, a, button {
+    font-family: "Jost", sans-serif;
     color: ${(props) => props.theme.colors.foreground};
     font-size: 1.2rem;
     font-weight: 500;

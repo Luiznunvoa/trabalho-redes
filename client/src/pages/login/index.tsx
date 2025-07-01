@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Credentials } from "types/profiles";
 import { useSession } from "../../hooks/useSession";
-import { StyledContainer, StyledContainerForm, StyledContainerHeader } from "../../styles/container";
+import { StyledContainer, StyledContainerForm, StyledContainerHeader, StyledInput } from "../../styles/container";
 import { StyledButton } from "../../styles/button";
 import { StyledAlert, StyledAlertContaienr } from "../../styles/error_message";
 import { Spinner } from "../../styles/spinner";
@@ -28,12 +28,13 @@ export function Login() {
   return (
     <StyledContainer>
       <StyledContainerHeader>
-        <h1>Login to Start Chatting!</h1>
+        <h1>Faça Login!</h1>
       </StyledContainerHeader>
       <StyledContainerForm onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="email">Email:</label>
-          <input
+          <StyledInput
+            $hasError={errors.email ? true : false}
             id="email"
             type="email"
             {...register("email", {
@@ -50,7 +51,8 @@ export function Login() {
         </StyledAlertContaienr>
         <div>
           <label htmlFor="password">Senha:</label>
-          <input
+          <StyledInput
+            $hasError={errors.password ? true : false}
             id="password"
             type="password"
             {...register("password", { required: "⚠️ Senha é Obrigatória!" })}
