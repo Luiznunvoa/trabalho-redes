@@ -5,7 +5,7 @@ export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
-  height: 40rem;
+  height: 45rem;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
@@ -57,8 +57,13 @@ export const MessageSender = styled.b`
 
 export const Form = styled.form`
   display: flex;
+  flex-direction: row;
   padding: 1rem;
   border-top: 1px solid ${({ theme }) => theme.colors.primary};
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Input = styled.input`

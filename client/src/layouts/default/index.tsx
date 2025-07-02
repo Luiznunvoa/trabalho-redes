@@ -12,3 +12,13 @@ export const DefaultLayout = () => {
     </>
   );
 };
+
+export const DashboardLayout = () => {
+  return (
+    <>
+      <StyledMain>
+        <Outlet />
+      </StyledMain>
+    </>
+  );
+}

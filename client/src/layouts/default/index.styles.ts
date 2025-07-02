@@ -5,6 +5,7 @@ export const StyledMain = styled.main`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 10px;
+    height: 100%;
+    // padding: 10px;
     gap: 30px;
 `;

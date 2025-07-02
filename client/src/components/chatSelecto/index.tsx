@@ -24,7 +24,7 @@ export function ChatSelector({
   }
 
   return (
-    <div style={{ width: "250px", borderRight: "1px solid #ccc", overflowY: "auto" }}>
+    <div>
       <h3>{allConversations ? "Outras Conversas" : "Suas Conversas"}</h3>
       {isLoading && <p>Carregando...</p>}
       {error && <p>Erro ao carregar conversas</p>}
@@ -41,12 +41,9 @@ export function ChatSelector({
                   : setConversationId(conversation.id)
               }
               style={{
-                cursor: "pointer",
-                padding: "8px",
                 backgroundColor:
                   conversation.id === selectedConversation ? "#ccc" : "transparent",
-              }}
-            >
+              }} >
               {conversation.name || conversation.id}
             </li>
           ) : null;

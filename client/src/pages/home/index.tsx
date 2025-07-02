@@ -10,31 +10,27 @@ export function Home() {
   const [conversationId, setConversationId] = useState<string | null>(null);
 
   return (
-    <>
-      <StyledHomeContainer>
-        <StyledLeftSide>
-          <ChatSelector
-            setConversationId={setConversationId}
-            selectedConversation={conversationId}
-          />
-        </StyledLeftSide>
-        <StyledRightSide>
-            {conversationId ? (
-              <Chat conversationId={conversationId} />
-            ) : (
-              <ChatContainer>
-                <h1>Escolha uma conversa!</h1>
+    <StyledHomeContainer>
+      <StyledLeftSide>
+        <ChatSelector
+          setConversationId={setConversationId}
+          selectedConversation={conversationId}
+        />
+        <button onClick={logout} >
+          Sair
+        </button>
+      </StyledLeftSide>
+      <StyledRightSide>
+        {conversationId ? (
+          <Chat conversationId={conversationId} />
+        ) : (
+          <ChatContainer>
+            <h1>Escolha uma conversa!</h1>
 
-              </ChatContainer>
-            )}
-        </StyledRightSide>
-      </StyledHomeContainer>
-
-      <a onClick={logout} >
-        Sair
-      </a>
-    </>
-
+          </ChatContainer>
+        )}
+      </StyledRightSide>
+    </StyledHomeContainer>
   );
 }
 

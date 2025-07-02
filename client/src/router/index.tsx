@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ValidateSelectedProfile, VerifyUserAuthentication } from "./middlewares";
-import { DefaultLayout } from "../layouts/default";
+import { DashboardLayout, DefaultLayout } from "../layouts/default";
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
 import { Home } from "../pages/home";
@@ -27,7 +27,7 @@ export function BrowserRouter() {
     {
       element: (
         <ValidateSelectedProfile>
-          <DefaultLayout />,
+          <DashboardLayout />,
         </ValidateSelectedProfile>
       ),
       children: [

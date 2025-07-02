@@ -5,9 +5,10 @@ export const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 100%;
   width: 100%;
   align-items: center;
-  padding: 2rem;
+  padding-top: 2rem;
   animation: ${slideDown} 1s ease-out forwards;
 
   @media (max-width: 768px) {
@@ -19,42 +20,13 @@ export const StyledHomeContainer = styled.div`
   }
 `;
 
-export const StyledDashBoard = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  gap: 1rem;
-
-  > div:first-child { 
-    padding: 2rem;
-  }
-`;
-
-export const StyledDashBoardContainer = styled.div`
-  display: flex;
-  flex - direction: column;
-  justify - content: center;
-  align - items: center;
-  padding: 2rem;
-  gap: 1rem;
-  animation: ${ slideDown } 1s ease - out forwards;
-
-  @media(max - width: 768px) {
-    padding: 1.5rem;
-  }
-
-  @media(max - width: 480px) {
-    padding: 1rem;
-  }
-`
-
 export const StyledLeftSide = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    gap: 30px;
+  width: 30%;
+  height: 100%;
+  background-color: ${(props) => props.theme.colors.onPrimary};
+  border: 2px solid ${(props) => props.theme.colors.foreground};
+  outline: 3px solid ${(props) => props.theme.colors.onPrimary};
+  outline-offset: 2px; /* opcional: cria um espaço entre a borda e o outline */
 `;
 
 export const StyledRightSide = styled.div`
