@@ -20,26 +20,37 @@ export class PrismaMessagesRepository implements MessagesRepository {
     return message
   }
 
-  async findManyByConversationId(conversationId: string, page: number) {
-    const messages = await prisma.message.findMany({
-      where: {
-        conversationId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: 20,
-      skip: (page - 1) * 20,
-      include: {
-        sender: {
-          select: {
-            name: true,
+  async findManyByConversationId(
+    conversationId: string,
+    page: number,
+    pageSize: number,
+  ) {
+    const [messages, total] = await Promise.all([
+      prisma.message.findMany({
+        where: {
+          conversationId,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        take: pageSize,
+        skip: (page - 1) * pageSize,
+        include: {
+          sender: {
+            select: {
+              name: true,
+            },
           },
         },
-      },
-    })
+      }),
+      prisma.message.count({
+        where: {
+          conversationId,
+        },
+      }),
+    ])
 
-    return messages
+    return { messages, total }
   }
 
   async delete(id: string) {

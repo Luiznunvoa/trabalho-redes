@@ -1,6 +1,15 @@
 import { AxiosHttpAdapter } from "../adapters/httpClient";
 import { Conversation, Message } from "../types/conversation";
 
+export type GetMessagesResponse = { 
+  messages: Message[], 
+  meta: { 
+    page: number, 
+    pageSize: number, 
+    total: number, 
+    totalPages: number } 
+}
+
 export class ConversationService {
   private http: AxiosHttpAdapter;
 
@@ -47,11 +56,12 @@ export class ConversationService {
     });
   }
 
-  async getMessages(data: { conversationId: string }): Promise<{ messages: Message[] }> {
+  async getMessages(data: { conversationId: string, page?: number, pageSize?: number }): Promise<GetMessagesResponse> {
     return await this.http.requestPrivateBackend({
       method: "get",
       url: `/conversations/messages/${data.conversationId}`,
-      withCredentials: true
+      withCredentials: true,
+      params: { page: data.page, pageSize: data.pageSize }
     });
   }
 }

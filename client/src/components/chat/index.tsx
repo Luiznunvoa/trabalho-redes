@@ -1,16 +1,19 @@
 import { FormEvent, useState } from "react";
 import { useMessages } from "../../hooks/useMessages";
+import * as S from "./index.styles";
+import { useUserStore } from "../../stores/useUserStore";
 
 export function Chat({ conversationId }: { conversationId: string }) {
   const { messages, error, isLoading, sendMessage } = useMessages(conversationId);
+  const userId = useUserStore().id;
   const [newMessage, setNewMessage] = useState("");
 
   if (error) {
-    return <>{error.message}</>
+    return <>{error.message}</>;
   }
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Previne o recarregamento da página
+    event.preventDefault();
 
     if (newMessage.trim()) {
       sendMessage(newMessage);
@@ -18,35 +21,40 @@ export function Chat({ conversationId }: { conversationId: string }) {
     }
   };
 
-return (
-    <>
-      {/* Estrutura do Chat */}
-      <div>
-        <h2>Chat</h2>
-        <div>
-          {isLoading ? <>LOADING</> : messages?.map((message) => (
-            <div key={message.id}>
-              <p>
-                <b>{message.sender.name}</b>: {message.content}{" "}
-              </p>
-            </div>
-          )).reverse()}
-        </div>
+  return (
+    <S.ChatContainer>
+      <S.MessagesContainer>
+        {isLoading ? (
+          <>LOADING</>
+        ) : (
+          messages
+            ?.map((message) => {
+              const isSent = message.senderId === userId;
+              const MessageComponent = isSent
+                ? S.SentMessage
+                : S.ReceivedMessage;
 
-        <form onSubmit={handleSendMessage}>
+              return (
+                <S.Message key={message.id}>
+                  {!isSent && (
+                    <S.MessageSender>{message.sender.name}</S.MessageSender>
+                  )}
+                  <MessageComponent>{message.content}</MessageComponent>
+                </S.Message>
+              );
+            })
+        )}
+      </S.MessagesContainer>
 
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Digite sua mensagem..."
-          />
-          <button type="submit">
-            Enviar
-          </button>
-        </form>
-      </div>
-    </>
+      <S.Form onSubmit={handleSendMessage}>
+        <S.Input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Digite sua mensagem..."
+        />
+        <S.Button type="submit">Enviar</S.Button>
+      </S.Form>
+    </S.ChatContainer>
   );
-
 }

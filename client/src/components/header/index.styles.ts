@@ -25,6 +25,7 @@ const slideDown = keyframes`
 `;
 
 export const StyledHeader = styled.header`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -32,6 +33,7 @@ export const StyledHeader = styled.header`
   background-color: ${(props) => props.theme.colors.background};
   padding: 1rem 3rem;
   animation: ${slideDown} 1s ease-out forwards;
+  z-index: 1000;
 
   h1 {
     color: ${(props) => props.theme.colors.onSecondary};

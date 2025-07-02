@@ -4,10 +4,12 @@ import { type Message } from '@prisma/client'
 interface GetMessagesUseCaseRequest {
   conversationId: string
   page: number
+  pageSize: number
 }
 
 interface GetMessagesUseCaseResponse {
   messages: Array<Message & { sender: { name: string } }>
+  total: number
 }
 
 export class GetMessagesUseCase {
@@ -16,12 +18,15 @@ export class GetMessagesUseCase {
   async execute({
     conversationId,
     page,
+    pageSize,
   }: GetMessagesUseCaseRequest): Promise<GetMessagesUseCaseResponse> {
-    const messages = await this.messagesRepository.findManyByConversationId(
-      conversationId,
-      page,
-    )
+    const { messages, total } =
+      await this.messagesRepository.findManyByConversationId(
+        conversationId,
+        page,
+        pageSize,
+      )
 
-    return { messages }
+    return { messages, total }
   }
 }

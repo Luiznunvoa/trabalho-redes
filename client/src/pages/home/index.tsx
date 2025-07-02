@@ -2,47 +2,39 @@ import { useSession } from "../../hooks/useSession";
 import { Chat } from "../../components/chat";
 import { useState } from "react";
 import { ChatSelector } from "../../components/chatSelecto";
+import { StyledHomeContainer, StyledLeftSide, StyledRightSide } from "./index.styles";
+import { ChatContainer } from "../../components/chat/index.styles";
 
 export function Home() {
   const { logout } = useSession();
   const [conversationId, setConversationId] = useState<string | null>(null);
-  const [showAllConversations, setShowAllConversations] = useState<boolean>(false);
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ width: '250px', borderRight: '1px solid #ccc', padding: '16px' }}>
-        <h3>Filtro</h3>
-        <label>
-          <input
-            type="checkbox"
-            checked={showAllConversations}
-            onChange={(e) => setShowAllConversations(e.target.checked)}
+    <>
+      <StyledHomeContainer>
+        <StyledLeftSide>
+          <ChatSelector
+            setConversationId={setConversationId}
+            selectedConversation={conversationId}
           />
-          Mostrar todas as conversas
-        </label>
+        </StyledLeftSide>
+        <StyledRightSide>
+            {conversationId ? (
+              <Chat conversationId={conversationId} />
+            ) : (
+              <ChatContainer>
+                <h1>Escolha uma conversa!</h1>
 
-        <ChatSelector
-          allConversations={showAllConversations}
-          setConversationId={setConversationId}
-          selectedConversation={conversationId}
-        />
+              </ChatContainer>
+            )}
+        </StyledRightSide>
+      </StyledHomeContainer>
 
-        <a
-          onClick={logout}
-          style={{ display: 'block', marginTop: '1rem', cursor: 'pointer' }}
-        >
-          Sair
-        </a>
-      </div>
+      <a onClick={logout} >
+        Sair
+      </a>
+    </>
 
-      <div style={{ flex: 1, padding: '16px' }}>
-        {conversationId ? (
-          <Chat conversationId={conversationId} />
-        ) : (
-          <p>Selecione uma conversa para começar</p>
-        )}
-      </div>
-    </div>
   );
 }
 

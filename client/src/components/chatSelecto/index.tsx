@@ -52,20 +52,6 @@ export function ChatSelector({
           ) : null;
         })}
       </ul>
-      <br/>
-      <h3>Crie uma nova conversa</h3>
-      <form onSubmit={handleCreateConversation}>
-        <input
-          type="text"
-          value={conversationName}
-          onChange={(e) => setConversationName(e.target.value)}
-          placeholder="De um nome..."
-        />
-        <button type="submit">
-          criar
-        </button>
-      </form>
-
     </div>
   );
 }

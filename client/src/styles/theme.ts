@@ -4,7 +4,7 @@ export const theme = {
     secondary: '#F0F2F5',              // fundo suave para áreas principais
     background: '#FFFEEA',            // fundo principal
     outline: '#B7B7B7',
-    surface: '#F8F9FA',               // superfícies secundárias (cards, modais)
+    surface: '#DBA979',               // superfícies secundárias (cards, modais)
     accent: '#7B61FF',                // roxo vibrante como cor de destaque
     success: '#4CAF50',               // verde para ações bem-sucedidas
     alert: '#E53935',                 // vermelho vivo para erros e alertas

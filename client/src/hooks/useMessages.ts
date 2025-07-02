@@ -1,15 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ConversationService } from "../services/conversationService";
+import { ConversationService, GetMessagesResponse } from "../services/conversationService";
 import { httpCLient } from "../adapters/httpClient";
 
 export function useMessages(conversationId: string) {
   const queryClient = useQueryClient();
 
-  const getNewMessages = async (conversationId: string) => {
+  const getNewMessages = async (conversationId: string, page?: number) => {
     const conversationService = new ConversationService(httpCLient);
     try {
-      const response = await conversationService.getMessages({
+      const response: GetMessagesResponse = await conversationService.getMessages({
         conversationId,
+        page
       });
       return response.messages;
     } catch (error) {
