@@ -4,7 +4,7 @@ import * as S from "./index.styles";
 import { useUserStore } from "../../stores/useUserStore";
 
 export function Chat({ conversationId }: { conversationId: string }) {
-  const { messages, error, isLoading, sendMessage } = useMessages(conversationId);
+  const { messages, error, isLoading, sendMessage, loadMoreMessages } = useMessages(conversationId);
   const userId = useUserStore().id;
   const [newMessage, setNewMessage] = useState("");
 
@@ -21,13 +21,18 @@ export function Chat({ conversationId }: { conversationId: string }) {
     }
   };
 
+  const handleLoadMoreMessages = () => {
+    loadMoreMessages();
+  }
+
   return (
     <S.ChatContainer>
       <S.MessagesContainer>
+
         {isLoading ? (
           <>LOADING</>
         ) : (
-          messages
+          messages?.messages
             ?.map((message) => {
               const isSent = message.senderId === userId;
               const MessageComponent = isSent
@@ -44,6 +49,15 @@ export function Chat({ conversationId }: { conversationId: string }) {
               );
             })
         )}
+
+        {
+          messages?.meta.pageSize && messages.meta.total && 
+          messages?.meta.pageSize < messages?.meta.total && (
+          <button onClick={handleLoadMoreMessages}>
+            Carregar Mais
+          </button>
+        )}
+
       </S.MessagesContainer>
 
       <S.Form onSubmit={handleSendMessage}>

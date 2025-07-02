@@ -1,18 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ConversationService, GetMessagesResponse } from "../services/conversationService";
 import { httpCLient } from "../adapters/httpClient";
+import { GetMessagesResponse, MessageService } from "../services/messageService";
+import { useState } from "react";
+
+const messageService = new MessageService(httpCLient);
 
 export function useMessages(conversationId: string) {
   const queryClient = useQueryClient();
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const getNewMessages = async (conversationId: string, page?: number) => {
-    const conversationService = new ConversationService(httpCLient);
+  const getNewMessages = async (conversationId: string, page?: number, pageSize?: number) => {
     try {
-      const response: GetMessagesResponse = await conversationService.getMessages({
+      const response: GetMessagesResponse = await messageService.getMessages({
         conversationId,
-        page
+        page,
+        pageSize
       });
-      return response.messages;
+      console.log(response);
+      return response;
     } catch (error) {
       console.error("Error fetching new messages:", error);
       throw error;
@@ -20,9 +26,8 @@ export function useMessages(conversationId: string) {
   };
 
   const createMessage = async (content: string) => {
-    const conversationService = new ConversationService(httpCLient);
     try {
-      await conversationService.createMessage({ content, conversationId});
+      await messageService.createMessage({ content, conversationId });
     } catch (error) {
       console.error("Error creating message:", error);
       throw error;
@@ -35,9 +40,9 @@ export function useMessages(conversationId: string) {
     isLoading,
   } = useQuery({
     queryKey: ["messages", conversationId],
-    queryFn: () => getNewMessages(conversationId),
-    refetchInterval: 5000,
+    queryFn: () => getNewMessages(conversationId, currentPage, pageSize),
     enabled: !!conversationId,
+    refetchInterval: 5000,
   });
 
   const { mutate: sendMessage } = useMutation({
@@ -47,5 +52,17 @@ export function useMessages(conversationId: string) {
     },
   });
 
-  return { messages, error, isLoading, sendMessage };
+  const { mutate: loadMoreMessages } = useMutation({
+    mutationFn: async () => {
+      setPageSize(pageSize + 20);
+      const newMessages = await getNewMessages(conversationId, currentPage, pageSize);
+      return newMessages;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["messages", conversationId] });
+    },
+  });
+
+  return { messages, error, isLoading, sendMessage, loadMoreMessages };
 }
+

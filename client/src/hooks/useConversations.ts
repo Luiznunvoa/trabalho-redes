@@ -5,10 +5,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../stores/useUserStore";
 import { Conversation } from "types/conversation";
 
+const conversationService = new ConversationService(httpCLient);
+
 export function useConversations(allConversations?: boolean) {
   const queryClient = useQueryClient();
   const [page, setPage] = useState<number>(1);
-  const conversationService = new ConversationService(httpCLient);
 
   const fetchConversations = async () => {
     try {
