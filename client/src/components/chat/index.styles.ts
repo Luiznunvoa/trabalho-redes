@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 80%;
   height: 85vh;
   max-height: 700px;

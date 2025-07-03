@@ -2,24 +2,35 @@ import { useSession } from "../../hooks/useSession";
 import { Chat } from "../../components/chat";
 import { useState } from "react";
 import { ChatSelector } from "../../components/chatSelecto";
-import { StyledHomeContainer, StyledLeftSide, StyledMobileButtons, StyledRightSide } from "./index.styles";
+import {
+  StyledHomeContainer,
+  StyledLeftSide,
+  StyledMobileButtons,
+  StyledRightSide,
+  ModalBackdrop,
+  ModalContent,
+} from "./index.styles";
 import { ChatContainer } from "../../components/chat/index.styles";
 
 export function Home() {
   const { logout } = useSession();
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSelectConversation = (id: string) => {
+    setConversationId(id);
+    setIsModalOpen(false);
+  };
 
   return (
     <StyledHomeContainer>
       <StyledLeftSide>
-        <h1>Suas Conversas  💬</h1>
+        <h1>Suas Conversas 💬</h1>
         <ChatSelector
-          setConversationId={setConversationId}
+          setConversationId={handleSelectConversation}
           selectedConversation={conversationId}
         />
-        <button onClick={logout} >
-          Sair
-        </button>
+        <button onClick={logout}>Sair</button>
       </StyledLeftSide>
       <StyledRightSide>
         {conversationId ? (
@@ -27,14 +38,25 @@ export function Home() {
         ) : (
           <ChatContainer>
             <h1>Escolha uma conversa!</h1>
-
           </ChatContainer>
         )}
         <StyledMobileButtons>
           <button onClick={logout}>Sair</button>
-          <button>Escolher Conversa</button>
+          <button onClick={() => setIsModalOpen(true)}>Escolher Conversa</button>
         </StyledMobileButtons>
       </StyledRightSide>
+
+      {isModalOpen && (
+        <ModalBackdrop onClick={() => setIsModalOpen(false)}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <h2>Suas Conversas  💬</h2>
+            <ChatSelector
+              setConversationId={handleSelectConversation}
+              selectedConversation={conversationId}
+            />
+          </ModalContent>
+        </ModalBackdrop>
+      )}
     </StyledHomeContainer>
   );
 }

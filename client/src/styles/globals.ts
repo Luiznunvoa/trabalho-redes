@@ -32,6 +32,10 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0; 
   }
 
+  input {
+    background-color: ${(props) => props.theme.colors.background}; 
+  }
+
   span {
     font-family: "Mulish", sans-serif;
     font-size: 1.2rem;
