@@ -10,7 +10,6 @@ export const StyledHomeContainer = styled.div`
   align-items: center;
   animation: ${slideDown} 1s ease-out forwards;
   background-color: transparent;
-  
 `;
 
 export const StyledLeftSide = styled.div`
@@ -23,6 +22,10 @@ export const StyledLeftSide = styled.div`
     margin: 2rem;
     color: ${(props) => props.theme.colors.onPrimary};
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const StyledRightSide = styled.div`
@@ -31,4 +34,18 @@ export const StyledRightSide = styled.div`
   align-items: center;
   width: 70%;
   gap: 30px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const StyledMobileButtons = styled.div`
+  display: none;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
 `;

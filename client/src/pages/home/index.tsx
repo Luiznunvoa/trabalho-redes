@@ -2,7 +2,7 @@ import { useSession } from "../../hooks/useSession";
 import { Chat } from "../../components/chat";
 import { useState } from "react";
 import { ChatSelector } from "../../components/chatSelecto";
-import { StyledHomeContainer, StyledLeftSide, StyledRightSide } from "./index.styles";
+import { StyledHomeContainer, StyledLeftSide, StyledMobileButtons, StyledRightSide } from "./index.styles";
 import { ChatContainer } from "../../components/chat/index.styles";
 
 export function Home() {
@@ -30,6 +30,10 @@ export function Home() {
 
           </ChatContainer>
         )}
+        <StyledMobileButtons>
+          <button onClick={logout}>Sair</button>
+          <button>Escolher Conversa</button>
+        </StyledMobileButtons>
       </StyledRightSide>
     </StyledHomeContainer>
   );

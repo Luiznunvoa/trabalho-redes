@@ -5,8 +5,12 @@ export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
-  height: 45rem;
-  background-color: ${({ theme }) => theme.colors.background};
+  height: 85vh;
+  max-height: 700px;
+  min-height: 400px;
+  background-color: transparent;
+  border-radius: 12px;
+  overflow: hidden;
 `;
 
 export const MessagesContainer = styled.div`
@@ -71,7 +75,7 @@ export const Input = styled.input`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.primary};
-  margin-right: 1rem;
+  margin: 0.5rem;
 `;
 
 export const Button = styled.button`
