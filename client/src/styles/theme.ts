@@ -1,6 +1,7 @@
 export const theme = {
   colors: {
     primary: '#5EABD6',                // azul vibrante para botões e elementos principais
+    alternate: '#7B4019',
     secondary: '#F0F2F5',              // fundo suave para áreas principais
     background: '#FFFEEA',            // fundo principal
     outline: '#B7B7B7',

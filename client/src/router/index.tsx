@@ -10,7 +10,7 @@ export function BrowserRouter() {
     {
       element: (
         <VerifyUserAuthentication>
-          <DefaultLayout />,
+          <DefaultLayout />
         </VerifyUserAuthentication>
       ),
       children: [
@@ -20,20 +20,20 @@ export function BrowserRouter() {
         },
         {
           path: "/register",
-          element: <Register />,
+          element: <Register />
         },
       ],
     },
     {
       element: (
         <ValidateSelectedProfile>
-          <DashboardLayout />,
+          <DashboardLayout />
         </ValidateSelectedProfile>
       ),
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: <Home />
         },
       ],
     },

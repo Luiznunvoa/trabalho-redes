@@ -5,6 +5,9 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  body {
     background-color: ${(props) => props.theme.colors.background}; 
   }
 
@@ -21,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0; 
   }
 
-  p, label, a, button {
+  p, label, a, button, li {
     font-family: "Jost", sans-serif;
     color: ${(props) => props.theme.colors.foreground};
     font-size: 1.2rem;

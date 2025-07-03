@@ -12,6 +12,7 @@ export function Home() {
   return (
     <StyledHomeContainer>
       <StyledLeftSide>
+        <h1>Suas Conversas  💬</h1>
         <ChatSelector
           setConversationId={setConversationId}
           selectedConversation={conversationId}

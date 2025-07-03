@@ -1,54 +1,38 @@
-import { FormEvent, useState } from "react";
 import { useConversations } from "../../hooks/useConversations";
+import {
+  ChatSelectorContainer,
+  ConversationItem,
+  ConversationList,
+  Error,
+  Loading,
+} from "./index.styles";
 
 type ChatSelectorProps = {
-  allConversations?: boolean;
   setConversationId: (conversationId: string) => void;
   selectedConversation?: string | null;
 };
 
 export function ChatSelector({
-  allConversations = false,
   setConversationId,
   selectedConversation,
 }: ChatSelectorProps) {
-  const { conversations, error, isLoading, enterConversation, createConversation } = useConversations(allConversations);
-  const [conversationName, setConversationName] = useState<string>();
-
-  const handleCreateConversation = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Previne o recarregamento da página
-
-    if (conversationName) {
-      createConversation(conversationName);
-    }
-  }
+  const { conversations, error, isLoading } = useConversations();
 
   return (
-    <div>
-      <h3>{allConversations ? "Outras Conversas" : "Suas Conversas"}</h3>
-      {isLoading && <p>Carregando...</p>}
-      {error && <p>Erro ao carregar conversas</p>}
-      <ul>
-        {conversations?.map((conversation) => {
-          const shouldDisplay = allConversations ? !conversation.isParticipant : conversation.isParticipant;
-
-          return shouldDisplay ? (
-            <li
-              key={conversation.id}
-              onClick={() =>
-                allConversations
-                  ? enterConversation(conversation.id)
-                  : setConversationId(conversation.id)
-              }
-              style={{
-                backgroundColor:
-                  conversation.id === selectedConversation ? "#ccc" : "transparent",
-              }} >
-              {conversation.name || conversation.id}
-            </li>
-          ) : null;
-        })}
-      </ul>
-    </div>
+    <ChatSelectorContainer>
+      {isLoading && <Loading>Carregando...</Loading>}
+      {error && <Error>Erro ao carregar conversas</Error>}
+      <ConversationList>
+        {conversations?.map((conversation) => (
+          <ConversationItem
+            key={conversation.id}
+            onClick={() => setConversationId(conversation.id)}
+            isSelected={conversation.id === selectedConversation}
+          >
+            {conversation.name || conversation.id}
+          </ConversationItem>
+        ))}
+      </ConversationList>
+    </ChatSelectorContainer>
   );
 }

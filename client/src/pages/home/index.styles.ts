@@ -8,33 +8,27 @@ export const StyledHomeContainer = styled.div`
   height: 100%;
   width: 100%;
   align-items: center;
-  padding-top: 2rem;
   animation: ${slideDown} 1s ease-out forwards;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    padding: 1rem;
-  }
+  background-color: transparent;
+  
 `;
 
 export const StyledLeftSide = styled.div`
   width: 30%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors.onPrimary};
-  border: 2px solid ${(props) => props.theme.colors.foreground};
-  outline: 3px solid ${(props) => props.theme.colors.onPrimary};
-  outline-offset: 2px; /* opcional: cria um espaço entre a borda e o outline */
+  height: 100vh;
+  background-color: ${(props) => props.theme.colors.alternate};
+  border-right: solid 2px ${(props) => props.theme.colors.foreground};
+
+  h1 {
+    margin: 2rem;
+    color: ${(props) => props.theme.colors.onPrimary};
+  }
 `;
 
 export const StyledRightSide = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    gap: 30px;
-
-    div {
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  gap: 30px;
 `;
