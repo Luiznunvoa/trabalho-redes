@@ -11,11 +11,13 @@ import {
   ModalContent,
 } from "./index.styles";
 import { ChatContainer } from "../../components/chat/index.styles";
+import { JoinConversation } from "../../components/joinConversation";
 
 export function Home() {
   const { logout } = useSession();
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   const handleSelectConversation = (id: string) => {
     setConversationId(id);
@@ -30,6 +32,7 @@ export function Home() {
           setConversationId={handleSelectConversation}
           selectedConversation={conversationId}
         />
+        <button onClick={() => setIsJoinModalOpen(true)}>Entrar em uma conversa</button>
         <button onClick={logout}>Sair</button>
       </StyledLeftSide>
       <StyledRightSide>
@@ -43,17 +46,25 @@ export function Home() {
         <StyledMobileButtons>
           <button onClick={logout}>Sair</button>
           <button onClick={() => setIsModalOpen(true)}>Escolher Conversa</button>
+          <button onClick={() => setIsJoinModalOpen(true)}>Entrar em Conversa</button>
         </StyledMobileButtons>
       </StyledRightSide>
 
       {isModalOpen && (
         <ModalBackdrop onClick={() => setIsModalOpen(false)}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
-            <h2>Suas Conversas  💬</h2>
             <ChatSelector
               setConversationId={handleSelectConversation}
               selectedConversation={conversationId}
             />
+          </ModalContent>
+        </ModalBackdrop>
+      )}
+
+      {isJoinModalOpen && (
+        <ModalBackdrop onClick={() => setIsJoinModalOpen(false)}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <JoinConversation />
           </ModalContent>
         </ModalBackdrop>
       )}
