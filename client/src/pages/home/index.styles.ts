@@ -66,8 +66,17 @@ export const ModalBackdrop = styled.div`
 export const ModalContent = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   padding: 2rem;
-  font-family: "Jost", sans-serif;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
+
+  h2 {
+    font-family: "Jost", sans-serif;
+  }
+`;
+
+export const ModalTitle = styled.h2`
+  color: ${({ theme }) => theme.colors.foreground};
+  margin-bottom: 1rem;
+  text-align: center;
 `;
