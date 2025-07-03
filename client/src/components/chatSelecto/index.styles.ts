@@ -65,3 +65,9 @@ export const Error = styled.p`
   text-align: center;
   padding: 1rem;
 `;
+
+export const NoConversationsMessage = styled.p`
+  color: ${({ theme }) => theme.colors.muted};
+  text-align: center;
+  padding: 1rem;
+`;

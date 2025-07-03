@@ -5,6 +5,7 @@ import {
   ConversationList,
   Error,
   Loading,
+  NoConversationsMessage,
 } from "./index.styles";
 
 type ChatSelectorProps = {
@@ -22,6 +23,11 @@ export function ChatSelector({
     <ChatSelectorContainer>
       {isLoading && <Loading>Carregando...</Loading>}
       {error && <Error>Erro ao carregar conversas</Error>}
+      {conversations && conversations.length === 0 && (
+        <NoConversationsMessage>
+          Você não tem conversas! 😭😭😭
+        </NoConversationsMessage>
+      )}
       <ConversationList>
         {conversations?.map((conversation) => (
           <ConversationItem
