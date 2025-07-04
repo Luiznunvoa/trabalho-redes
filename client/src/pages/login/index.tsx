@@ -20,7 +20,7 @@ export function Login() {
     return (
       <>
         <p>Erro inesperado aconteceu! Verifique suas credenciais!</p>
-        <a onClick={() => window.location.href = "/login"}>Voltar</a>
+        <a onClick={() => window.location.href = "/"}>Voltar</a>
       </>
     );
   }

@@ -8,13 +8,12 @@ const messageService = new MessageService(httpCLient);
 export function useMessages(conversationId: string) {
   const queryClient = useQueryClient();
   const [pageSize, setPageSize] = useState<number>(20);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const getNewMessages = async (conversationId: string, page?: number, pageSize?: number) => {
+  const getNewMessages = async (conversationId: string, pageSize?: number) => {
     try {
       const response: GetMessagesResponse = await messageService.getMessages({
         conversationId,
-        page,
+        page: 1,
         pageSize
       });
       console.log(response);
@@ -40,7 +39,7 @@ export function useMessages(conversationId: string) {
     isLoading,
   } = useQuery({
     queryKey: ["messages", conversationId],
-    queryFn: () => getNewMessages(conversationId, currentPage, pageSize),
+    queryFn: () => getNewMessages(conversationId, pageSize),
     enabled: !!conversationId,
     refetchInterval: 5000,
   });
@@ -55,7 +54,7 @@ export function useMessages(conversationId: string) {
   const { mutate: loadMoreMessages } = useMutation({
     mutationFn: async () => {
       setPageSize(pageSize + 20);
-      const newMessages = await getNewMessages(conversationId, currentPage, pageSize);
+      const newMessages = await getNewMessages(conversationId, pageSize);
       return newMessages;
     },
     onSuccess: () => {

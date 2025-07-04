@@ -78,7 +78,7 @@ export function Register() {
         </StyledAlertContaienr>
 
         <StyledButton  type="submit">Registrar</StyledButton>
-        <Link to={"/login"}>Já tem conta??</Link>
+        <Link to={"/"}>Já tem conta??</Link>
       </StyledContainerForm>
 
     </StyledContainer>

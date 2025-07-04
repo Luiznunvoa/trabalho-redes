@@ -5,7 +5,7 @@ export class AxiosHttpAdapter {
   private privateBackendInstance: AxiosInstance;
 
   constructor() {
-    const baseURL: string = "http://localhost:3333";
+    const baseURL: string = "https://server-redes-production.up.railway.app";
 
     this.privateBackendInstance = axios.create({
       baseURL,
@@ -43,7 +43,7 @@ export class AxiosHttpAdapter {
       (error: any): Promise<any> => {
         if (error.response && error.response.status === 401) {
           useSessionStore.getState().reset()
-          window.location.href = "/login";
+          // window.location.href = "/";
         }
         return Promise.reject(error);
       }

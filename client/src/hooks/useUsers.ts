@@ -39,7 +39,7 @@ export function useUser() {
       userService.create(userData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-      navigate("/login");
+      navigate("/");
     },
   });
 

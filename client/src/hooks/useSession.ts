@@ -25,7 +25,7 @@ export function useSession() {
 
   function logout() {
     reset(); // Remove o token do Zustand
-    navigate("/login")
+    navigate("/")
   }
 
   return {
